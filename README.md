@@ -1,5 +1,7 @@
 # 🤖 GenAI Personal Assistant (n8n + WhatsApp + OpenAI)
 
+## **The information below is generated using an LLM**
+
 This project builds a fully automated **personal assistant** powered by **n8n**, **OpenAI**, and **Twilio WhatsApp**, capable of answering natural language queries and routing them to purpose-built agents.
 
 It requires no external UI—everything runs through WhatsApp and n8n’s workflow engine.
@@ -9,7 +11,7 @@ It requires no external UI—everything runs through WhatsApp and n8n’s workfl
 ## 🔍 Features
 
 ✅ WhatsApp-based natural language interface  
-✅ Intelligent tool-calling agent using GPT-4o-mini  
+✅ Intelligent tool-calling agent using GPT-4o
 ✅ Fine-tuned classification model for email alerts  
 ✅ Semantic search over stored emails (PGVector)  
 ✅ Google Calendar integration (view/add/edit/delete events)  
@@ -39,30 +41,16 @@ It requires no external UI—everything runs through WhatsApp and n8n’s workfl
 
 ---
 
-## 📁 File Structure
+### 📬 Email Ingestion Workflow
 
-```
-genai-personal-assistant/
-│
-├── workflows/                 ← n8n exported JSONs
-│   ├── personal_assistant_agent.json
-│   ├── email_history_agent.json
-│   ├── calendar_agent.json
-│   └── email_notification_workflow.json
-│
-├── notebooks/                 ← Jupyter notebooks for fine-tuning
-│   ├── prepare_training_data.ipynb
-│   └── fine_tune_gpt4o_mini.ipynb
-│
-├── data/                      ← Example or training datasets
-│   └── sample_emails.csv
-│
-├── scripts/                   ← Helper utilities (optional)
-│   └── export_n8n_workflows.py
-│
-├── .gitignore
-└── README.md
-```
+Incoming emails are automatically ingested and passed through a pipeline that:
+
+- Embeds and stores their content in PGVector
+- Classifies each email using a **fine-tuned GPT-4o-mini**
+- Summarizes the message using **GPT-4o-mini** (base)
+- Stores metadata (date, classification, messageId) for future RAG use
+
+This allows the assistant to retrieve and reason over real emails without polling Gmail in real-time.
 
 ---
 
@@ -84,13 +72,13 @@ Try:
 
 ---
 
-## 🧠 Fine-Tuning Pipeline
+## 🧠 Fine-Tuning Procedure
 
 The assistant uses a **fine-tuned GPT-4o-mini** model to classify email messages.  
 See `notebooks/` for:
 
-- `prepare_training_data.ipynb`: Parses & formats Gmail text for fine-tuning
-- `fine_tune_gpt4o_mini.ipynb`: Uploads to OpenAI and manages tuning
+- `model-fine-tuning.ipynb`: Parses & formats Gmail text for fine-tuning
+- `fine-tune-performance-test.ipynb`: Evaluations of the fine-tuning process
 
 Classification labels:
 - `Internship`: status updates, interview invites, rejections
@@ -98,12 +86,15 @@ Classification labels:
 - `Personal`: handwritten messages, non-promotional
 - `Irrelevant`: everything else
 
+Actual fine-tuning through the OpenAI dashboard.
+
 ---
 
 ## 🔐 Credentials Needed
 
 Store credentials via n8n UI:
 - Twilio WhatsApp
+- Google Gmail OAuth
 - Google Calendar OAuth
 - OpenAI API Key
 - PostgreSQL (with pgvector)
