@@ -1,0 +1,39 @@
+# Logs
+*.log
+*.log.*
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.so
+
+# n8n local files
+.env
+n8n.db
+n8n.sqlite
+*.sqlite
+
+# VSCode & JetBrains IDEs
+.vscode/
+.idea/
+
+# macOS system files
+.DS_Store
+
+# Node.js dependencies (if applicable)
+node_modules/
+
+# Environment files
+.env
+.env.*
+
+# Temporary files
+*.tmp
+*.swp
+
+# Backup files
+*~
+*.bak
