@@ -1,0 +1,137 @@
+{
+  "name": "Tavily",
+  "nodes": [
+    {
+      "parameters": {
+        "query": "={{$json.query}}",
+        "options": {
+          "max_results": 1
+        }
+      },
+      "type": "n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        140,
+        -20
+      ],
+      "id": "d018229e-ae3f-4c02-bed8-57ebd678846d",
+      "name": "Tavily",
+      "credentials": {
+        "tavilyApi": {
+          "id": "iin72mSO1l31aS65",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "extract",
+        "urls": "={{ $json.results[0].url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-tavily.tavily",
+      "typeVersion": 1,
+      "position": [
+        460,
+        -20
+      ],
+      "id": "05949697-9cad-48e2-87ce-54606a046614",
+      "name": "Tavily1",
+      "credentials": {
+        "tavilyApi": {
+          "id": "iin72mSO1l31aS65",
+          "name": "Tavily account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "036ca5a7-75bc-4a8f-aa2b-8813b698688d",
+              "name": "content",
+              "value": "={{ $('Tavily').item.json.results[0].content }}",
+              "type": "string"
+            },
+            {
+              "id": "92ae9d0e-827f-48d6-b7f0-3a84b2e52802",
+              "name": "raw_content",
+              "value": "={{ $json.results[0].raw_content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        680,
+        -20
+      ],
+      "id": "bfee6577-ee40-48f0-9509-3956c0759a98",
+      "name": "Result"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -120,
+        -20
+      ],
+      "id": "0eb310e2-be4d-4c99-8870-b119bcd3ff26",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Tavily": {
+      "main": [
+        [
+          {
+            "node": "Tavily1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tavily1": {
+      "main": [
+        [
+          {
+            "node": "Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Tavily",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4fd9249b-6865-486a-bcea-c484ede85c00",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3e7d12e32cae4adeab65384469f612af395443af0e8c802155505c85232fd6fc"
+  },
+  "id": "8ugvD2EOzVnUV07J",
+  "tags": []
+}

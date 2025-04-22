@@ -1,0 +1,204 @@
+{
+  "name": "Email History Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -200,
+        -140
+      ],
+      "id": "30e57499-ba32-4a94-ada2-01eddd6e3e79",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        100,
+        60
+      ],
+      "id": "74e8d47f-57e3-4c0b-b9d7-9cfd9e37c832",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.query }}",
+        "options": {
+          "systemMessage": "# ROLE\nYou answer questions about USER_NAME's stored emails using the **PGVector table `emails`**.\n\n# DATA MODEL\nid  | text  | embedding | metadata.received_at (ISO‑8601)\n\n# HOW TO WORK\n1. Embed the user query ➜ retrieve **top K = 20** rows.  \n2. Read `text` + `received_at`, reason over them, then answer.\n\n# CONSTRAINTS\n* Bullet‑list email subjects or snippets when helpful.  \n* If nothing relevant, answer: “No matching emails.”\n\n# FORMAT\nReturn plain English only (no JSON, no tool calls).\n\n# END"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -40,
+        -400
+      ],
+      "id": "20bcf813-be74-459d-b955-57d41f06f3cd",
+      "name": "Email Retrieval Agent"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "query"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -300,
+        -400
+      ],
+      "id": "d819c555-d4a2-42a4-84b3-0f6a5a7a37cc",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "dee6aac5-8a67-45c5-9a6f-fd2aa5aaa694",
+              "name": "response",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        540,
+        -400
+      ],
+      "id": "5ea235c2-9f24-4eda-99f3-ff150a337e9b",
+      "name": "Response"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "n8ndb",
+        "toolDescription": "PGVector tool: retrieves top‑K similar emails.",
+        "tableName": "emails",
+        "topK": 20,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.1,
+      "position": [
+        100,
+        -80
+      ],
+      "id": "e7a100cb-bcbf-49ae-a1cf-9c99b5da3351",
+      "name": "Email Vector Retriever",
+      "credentials": {
+        "postgres": {
+          "id": "Uos87DIHCW6HcVNt",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Email Retrieval Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Email Vector Retriever",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Retrieval Agent": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Email Retrieval Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Vector Retriever": {
+      "ai_tool": [
+        [
+          {
+            "node": "Email Retrieval Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "timeSavedPerExecution": 0
+  },
+  "versionId": "0c9f0036-6fb9-47cb-bbe0-12c6a3627b5e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3e7d12e32cae4adeab65384469f612af395443af0e8c802155505c85232fd6fc"
+  },
+  "id": "AYs6DdVhGkEsUFnZ",
+  "tags": []
+}

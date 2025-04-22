@@ -1,0 +1,1340 @@
+{
+  "name": "Email Notification Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "id": "28376391-556c-4325-a821-2bf023f5e0ac",
+      "name": "Gmail Trigger Personal",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        520,
+        -360
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "RoW27OSVCgI44MCa",
+          "name": "Gmail account Personal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "id": "5f06302d-e601-4a04-bb23-9c0675f95628",
+      "name": "Gmail Trigger Professional",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        520,
+        -10
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "T1CnJqJ7CdgZVwwm",
+          "name": "Gmail account Professional"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a8576f08-9920-40db-a446-110d6578ceed",
+              "leftValue": "={{ $json.message.content }}",
+              "rightValue": "Internship",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "ba07dc7f-3e31-4ac8-bb5c-7f838ffd0605",
+              "leftValue": "={{ $json.message.content }}",
+              "rightValue": "Canvas",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "f37d7e5f-91ba-4d93-9d48-60a7ac7ac23c",
+              "leftValue": "={{ $json.message.content }}",
+              "rightValue": "Personal",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "a512b2d3-6d78-4476-9bf7-3f4762abd9c7",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1474,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "id": "1666b4bd-f179-405c-829b-84642edcd6b0",
+      "name": "Gmail Trigger School",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        520,
+        590
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "CPU5OZ75qNl2OWe0",
+          "name": "Gmail account School"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a8576f08-9920-40db-a446-110d6578ceed",
+              "leftValue": "={{ $json.message.content }}",
+              "rightValue": "Internship",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "ba07dc7f-3e31-4ac8-bb5c-7f838ffd0605",
+              "leftValue": "={{ $json.message.content }}",
+              "rightValue": "Canvas",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "f37d7e5f-91ba-4d93-9d48-60a7ac7ac23c",
+              "leftValue": "={{ $json.message.content }}",
+              "rightValue": "Personal",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "a5c82e14-3369-48c6-a515-454f1b080e4a",
+      "name": "If1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1474,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "from": "+14155238886",
+        "to": "+15559876543",
+        "toWhatsapp": true,
+        "message": "={{ $json.message.content }}",
+        "options": {}
+      },
+      "id": "7bd2d96d-3a02-484b-86d4-7d186ffd809d",
+      "name": "Twilio1",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        240
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "tg5fjlcyf6jfb5qb",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a8576f08-9920-40db-a446-110d6578ceed",
+              "leftValue": "={{ $json.message.content }}",
+              "rightValue": "Internship",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "ba07dc7f-3e31-4ac8-bb5c-7f838ffd0605",
+              "leftValue": "={{ $json.message.content }}",
+              "rightValue": "Canvas",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "f37d7e5f-91ba-4d93-9d48-60a7ac7ac23c",
+              "leftValue": "={{ $json.message.content }}",
+              "rightValue": "Personal",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "16dbd593-b46f-4250-9c17-60ffc890bb85",
+      "name": "If2",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1474,
+        640
+      ]
+    },
+    {
+      "parameters": {
+        "from": "+14155238886",
+        "to": "+15559876543",
+        "toWhatsapp": true,
+        "message": "={{ $json.message.content }}",
+        "options": {}
+      },
+      "id": "82df6c8b-f21e-4fd6-a88e-66ca3aba9d95",
+      "name": "Twilio3",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        440
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "tg5fjlcyf6jfb5qb",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "from": "+14155238886",
+        "to": "+15559876543",
+        "toWhatsapp": true,
+        "message": "={{ $json.message.content }}",
+        "options": {}
+      },
+      "id": "d32526a6-535d-48fc-9b40-6b2209456e85",
+      "name": "Twilio",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        640
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "tg5fjlcyf6jfb5qb",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5c888093-bc08-4965-a3bd-77724b0fad97",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "demo.alt1@gmail.com",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "92430eba-5a73-4016-a1b5-ade4941af1e3",
+              "leftValue": "={{$if($json.text == undefined, \"null\", \"0\")}}",
+              "rightValue": "null",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "fffd1728-d14b-4cef-a8a4-adca9cec1629",
+      "name": "If3",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        740,
+        -10
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5c888093-bc08-4965-a3bd-77724b0fad97",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "demo.primary@gmail.com",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "49d0c012-300b-4afd-9bf5-f1745b256a6d",
+              "leftValue": "{{$if($json.text == undefined, \"null\", \"0\")}}",
+              "rightValue": "null",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ec8bc3a4-bbfe-459a-b49c-5af322202159",
+      "name": "If4",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        740,
+        -360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5c888093-bc08-4965-a3bd-77724b0fad97",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "demo.school@gmail.com",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "d4615562-6445-4897-8564-7c7ab990003c",
+              "leftValue": "={{$if($json.text == undefined, \"null\", \"0\")}}",
+              "rightValue": "null",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4be88c7b-6900-4c53-ac0b-3c1d1206f80a",
+      "name": "If5",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        740,
+        590
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Summarize the following email into one short, direct sentence, such as:\n\n\"Your application to [Company Name] was rejected.\"\n\n\"Your [Course Name] [Assignment/Quiz/Exam Name] grade was just released.\"\n\n\"[Sender Name] sent you a personal email about [email topic].\"\n\nMake the sentence clear, specific, and informative. \n\nIf the email is a reply, or consists of multiple email conversations, make sure to summarize only the MOST RECENT message.",
+              "role": "system"
+            },
+            {
+              "content": "=Subject: {{ $('Gmail Trigger Professional').item.json.subject }}  \\n Body: {{ $('Gmail Trigger Professional').item.json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b9dd761b-30e1-486f-a95d-40428268dfa9",
+      "name": "OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        1832,
+        440
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Summarize the following email into one short, direct sentence, such as:\n\n\"Your application to [Company Name] was rejected.\"\n\n\"Your [Course Name] [Assignment/Quiz/Exam Name] grade was just released.\"\n\n\"[Sender Name] sent you a personal email about [email topic].\"\n\nMake the sentence clear, specific, and informative. \n\nIf the email is a reply, or consists of multiple email conversations, make sure to summarize only the MOST RECENT message.",
+              "role": "system"
+            },
+            {
+              "content": "=Subject: {{ $('Gmail Trigger School').item.json.subject }}  \\n Body: {{ $('Gmail Trigger School').item.json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c51cec23-57dd-49eb-bcf3-fb38a5d37b41",
+      "name": "OpenAI4",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        1832,
+        640
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Summarize the following email into one short, direct sentence, such as:\n\n\"Your application to [Company Name] was rejected.\"\n\n\"Your [Course Name] [Assignment/Quiz/Exam Name] grade was just released.\"\n\n\"[Sender Name] sent you a personal email about [email topic].\"\n\nMake the sentence clear, specific, and informative. \n\nIf the email is a reply, or consists of multiple email conversations, make sure to summarize only the MOST RECENT message.",
+              "role": "system"
+            },
+            {
+              "content": "=Subject: {{ $('Gmail Trigger Personal').item.json.subject }}  \\n Body: {{ $('Gmail Trigger Personal').item.json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "67161d41-105e-4464-bb99-ef2879433987",
+      "name": "OpenAI2",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        1832,
+        240
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "ft:gpt-4o-mini-2024-07-18:personal:gpt-4o-mini-email-v0:BOBBKxPi:ckpt-step-370",
+          "mode": "list",
+          "cachedResultName": "FT:GPT-4O-MINI-2024-07-18:PERSONAL:GPT-4O-MINI-EMAIL-V0:BOBBKXPI:CKPT-STEP-370"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Categorize the email below into exactly one of the following categories:\n\nInternship — only if it contains an update about the status of my internship applications (e.g., interview invitations, rejections, offers). Application confirmation or acknowledgment emails such as \"Thank you for applying\", \"Thank you for your interest\", \"Thank you for your application\", or \"Your application is under review\" is considered Irrelevant.\n\nCanvas — only if it announces a grade release for an assignment, quiz, exam, or important information regarding the courses.\n\nPersonal — only if the message is personally written to me and is NOT spam, automated, or promotional.\n\nIrrelevant — anything else.\n\nRespond with ONLY the category name.",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 16
+        }
+      },
+      "id": "7441117e-30a0-4ee7-b6c6-306caeb99264",
+      "name": "OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        960,
+        440
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "ft:gpt-4o-mini-2024-07-18:personal:gpt-4o-mini-email-v0:BOBBKxPi:ckpt-step-370",
+          "mode": "list",
+          "cachedResultName": "FT:GPT-4O-MINI-2024-07-18:PERSONAL:GPT-4O-MINI-EMAIL-V0:BOBBKXPI:CKPT-STEP-370"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Categorize the email below into exactly one of the following categories:\n\nInternship — only if it contains an update about the status of my internship applications (e.g., interview invitations, rejections, offers). Application confirmation or acknowledgment emails such as \"Thank you for applying\", \"Thank you for your interest\", \"Thank you for your application\", or \"Your application is under review\" is considered Irrelevant.\n\nCanvas — only if it announces a grade release for an assignment, quiz, exam, or important information regarding the courses.\n\nPersonal — only if the message is personally written to me and is NOT spam, automated, or promotional.\n\nIrrelevant — anything else.\n\nRespond with ONLY the category name.",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 16
+        }
+      },
+      "id": "a57346c8-1ef0-4c9c-9fe7-eb61bcb874e6",
+      "name": "OpenAI5",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        960,
+        640
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "ft:gpt-4o-mini-2024-07-18:personal:gpt-4o-mini-email-v0:BOBBKxPi:ckpt-step-370",
+          "mode": "list",
+          "cachedResultName": "FT:GPT-4O-MINI-2024-07-18:PERSONAL:GPT-4O-MINI-EMAIL-V0:BOBBKXPI:CKPT-STEP-370"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Categorize the email below into exactly one of the following categories:\n\nInternship — only if it contains an update about the status of my internship applications (e.g., interview invitations, rejections, offers). Application confirmation or acknowledgment emails such as \"Thank you for applying\", \"Thank you for your interest\", \"Thank you for your application\", or \"Your application is under review\" is considered Irrelevant.\n\nCanvas — only if it announces a grade release for an assignment, quiz, exam, or important information regarding the courses.\n\nPersonal — only if the message is personally written to me and is NOT spam, automated, or promotional.\n\nIrrelevant — anything else.\n\nRespond with ONLY the category name.",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {
+          "maxTokens": 16
+        }
+      },
+      "id": "8c7be11c-fd9a-496d-abf5-5b6b3c3e1ccb",
+      "name": "OpenAI3",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        960,
+        240
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": "emails",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.1,
+      "position": [
+        1352,
+        -360
+      ],
+      "id": "439b3eb6-01bc-47d2-b96c-a68bc4a2d980",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "Uos87DIHCW6HcVNt",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1336,
+        -140
+      ],
+      "id": "8831b051-66eb-4432-990c-5ae33e642ca1",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.text }},  ",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "date",
+                "value": "={{ $json.date }}"
+              },
+              {
+                "name": "id",
+                "value": "={{ $json.id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        -137.5
+      ],
+      "id": "5e1f8722-8681-4a63-9cb2-5adc7fd3934b",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1544,
+        60
+      ],
+      "id": "c0efcc17-07aa-4e26-aeb2-5e4f36bae73f",
+      "name": "Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7d1b4b7-78c5-48af-9aa6-632692d7e180",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b8adc387-0393-4f43-9d65-5dc65654799e",
+              "name": "text",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            },
+            {
+              "id": "6b18c742-a1f3-4b7b-ae33-56468b143200",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1038,
+        -160
+      ],
+      "id": "d0ae0c9d-0fe8-45e6-b7bb-3df65007e333",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": "emails",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.1,
+      "position": [
+        1196,
+        1100
+      ],
+      "id": "0b94ae45-a7a1-4933-8fea-4173d605f4b7",
+      "name": "Postgres PGVector Store1",
+      "credentials": {
+        "postgres": {
+          "id": "Uos87DIHCW6HcVNt",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1180,
+        1320
+      ],
+      "id": "850134c7-e672-4bba-9c96-3fe995691942",
+      "name": "Embeddings OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "gm4ash96Dg6z4Snk",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.text }},  ",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "date",
+                "value": "={{ $json.date }}"
+              },
+              {
+                "name": "id",
+                "value": "={{ $json.id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        1322.5
+      ],
+      "id": "5f7a6600-5316-4d87-842c-4a73c93c289f",
+      "name": "Default Data Loader1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.textSplitterCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1388,
+        1520
+      ],
+      "id": "6428ddcd-fed0-418f-8dc7-3962b3b600b7",
+      "name": "Character Text Splitter1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7d1b4b7-78c5-48af-9aa6-632692d7e180",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b8adc387-0393-4f43-9d65-5dc65654799e",
+              "name": "text",
+              "value": "={{$if($json.text == undefined, \"null\", $json.text)}}",
+              "type": "string"
+            },
+            {
+              "id": "6b18c742-a1f3-4b7b-ae33-56468b143200",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        960,
+        1100
+      ],
+      "id": "3cb0a010-b447-475c-b75a-d250ea9aff91",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "simple": false,
+        "filters": {
+          "receivedAfter": "2025-03-20T00:00:00"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        740,
+        1300
+      ],
+      "id": "49f42e3a-c019-4c50-976e-3846e46c20d5",
+      "name": "Gmail",
+      "webhookId": "efb2056d-3bd0-40d4-9983-28e6e11e2974",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "CPU5OZ75qNl2OWe0",
+          "name": "Gmail account School"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        520,
+        1100
+      ],
+      "id": "f70481de-384b-44c9-b7a5-97dd5bd1ffc3",
+      "name": "When clicking ‘Test workflow’",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "simple": false,
+        "filters": {
+          "receivedAfter": "2025-03-20T00:00:00"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        740,
+        1100
+      ],
+      "id": "f3d2263a-bcc0-4772-8c2a-0632b560a727",
+      "name": "Gmail1",
+      "webhookId": "efb2056d-3bd0-40d4-9983-28e6e11e2974",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "T1CnJqJ7CdgZVwwm",
+          "name": "Gmail account Professional"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "returnAll": true,
+        "simple": false,
+        "filters": {
+          "receivedAfter": "2025-03-20T00:00:00"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        740,
+        900
+      ],
+      "id": "6ba1fa08-64c6-44bb-94a0-9ecf436c7b98",
+      "name": "Gmail2",
+      "webhookId": "efb2056d-3bd0-40d4-9983-28e6e11e2974",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "RoW27OSVCgI44MCa",
+          "name": "Gmail account Personal"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Run this only once\nImport previous emails into vector DB\nAll emails from March 20th, 2025",
+        "height": 800,
+        "width": 1640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        218,
+        860
+      ],
+      "typeVersion": 1,
+      "id": "cb080e7d-07c9-49cf-9758-01a03d01428b",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger Personal": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger Professional": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger School": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "OpenAI4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "OpenAI3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "OpenAI5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Twilio3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI4": {
+      "main": [
+        [
+          {
+            "node": "Twilio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "Twilio1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI5": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI3": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader1": {
+      "ai_document": [
+        [
+          {
+            "node": "Postgres PGVector Store1",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Character Text Splitter1": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader1",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gmail2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "439b8b08-213e-4be6-b3e3-1a292717ae3b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3e7d12e32cae4adeab65384469f612af395443af0e8c802155505c85232fd6fc"
+  },
+  "id": "Uo7AcnxPvKFERWWC",
+  "tags": []
+}
