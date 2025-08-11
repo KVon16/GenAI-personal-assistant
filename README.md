@@ -11,7 +11,7 @@ It requires no external UI—everything runs through WhatsApp and n8n’s workfl
 ## 🔍 Features
 
 ✅ WhatsApp-based natural language interface  
-✅ Intelligent tool-calling agent using GPT-4o-mini
+✅ Intelligent tool-calling agent using GPT-4o-mini  
 ✅ Fine-tuned classification model for email alerts  
 ✅ Semantic search over stored emails (PGVector)  
 ✅ Google Calendar integration (view/add/edit/delete events)  
